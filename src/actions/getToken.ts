@@ -2,10 +2,10 @@
 
 import axios from "axios";
 
-export async function addAuthData() {
+export async function getToken() {
     try {
         const response = await axios.get(
-            "https://test-music-app.ru/music_web-app_backend/reg.php"
+            "https://test-music-app.ru/music_web-app_backend/API/csrf.php"
         );
 
         const data = response.data;

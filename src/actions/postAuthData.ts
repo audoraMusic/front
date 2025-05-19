@@ -6,20 +6,22 @@ interface AuthDataTypes {
   login: string;
   mail: string;
   password: string;
+  csrf_token: string;
 }
 
-export async function postAuthData({ login, mail, password }: AuthDataTypes) {
+export async function postAuthData({ login, mail, password, csrf_token }: AuthDataTypes) {
   try {
     const response = await axios.post(
-      "https://test-music-app.ru/music_web-app_backend/reg.php",
+      "https://test-music-app.ru/music_web-app_backend/API/reg.php",
       {
         login,
         mail,
         password,
+        csrf_token
       },
       {
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
         },
       }
     );
@@ -28,7 +30,7 @@ export async function postAuthData({ login, mail, password }: AuthDataTypes) {
     if (!data.success) {
       throw new Error(data.error || "Ошибка регистрации");
     }
-    return data; // Возвращаем результат для обработки в addUser
+    return data; 
   } catch (error) {
     throw new Error(
       error instanceof Error ? error.message : "Ошибка подключения к серверу"

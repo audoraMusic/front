@@ -2,8 +2,9 @@
 
 import styles from "./Auth.module.scss";
 import { Button } from "@/components/Button/Button";
-import { useActionState } from "react";
+import { useActionState, useState, useEffect, useTransition } from "react";
 import { postAuthData } from "@/actions/postAuthData";
+import { getToken } from "@/actions/getToken";
 
 export interface FormState {
     login: string;
@@ -13,12 +14,34 @@ export interface FormState {
 }
 
 export default function Auth() {
-    const [state, action, isPending] = useActionState(addUser, {
-        login: "",
-        mail: "",
-        password: "",
-        error: null,
-    });
+    const [csrfToken, setCsrfToken] = useState<string | null>(null);
+    const [, startTransition] = useTransition();
+
+    // Получаем CSRF-токен при загрузке компонента
+    useEffect(() => {
+        startTransition(async () => {
+            try {
+                const data = await getToken(); 
+                setCsrfToken(data.csrf_token);
+            } catch (error) {
+                console.error(
+                    "Ошибка при получении CSRF-токена:",
+                    error.message
+                );
+            }
+        });
+    }, []);
+
+    const [state, action, isPending] = useActionState(
+        (prevState: FormState, formData: FormData) =>
+            addUser(prevState, formData, csrfToken),
+        {
+            login: "",
+            mail: "",
+            password: "",
+            error: null,
+        }
+    );
 
     return (
         <div style={{ display: "flex", minHeight: "100vh" }}>
@@ -49,7 +72,7 @@ export default function Auth() {
                     {state.error && (
                         <p className={styles.error}>{state.error}</p>
                     )}
-                    <Button disabled={isPending}>
+                    <Button disabled={isPending || !csrfToken}>
                         {isPending ? "Отправка..." : "Отправить"}
                     </Button>
                 </form>
@@ -60,14 +83,24 @@ export default function Auth() {
 
 async function addUser(
     prevState: FormState,
-    formData: FormData
+    formData: FormData,
+    csrfToken: string | null
 ): Promise<FormState> {
     const login = formData.get("login") as string;
     const mail = formData.get("mail") as string;
     const password = formData.get("password") as string;
 
+    if (!csrfToken) {
+        return {
+            login,
+            mail,
+            password,
+            error: "CSRF-токен не получен",
+        };
+    }
+
     try {
-        await postAuthData({ login, mail, password });
+        await postAuthData({ login, mail, password, csrf_token: csrfToken });
         return { login, mail, password, error: null };
     } catch (error) {
         return {
