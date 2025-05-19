@@ -5,7 +5,10 @@ import axios from "axios";
 export async function getToken() {
     try {
         const response = await axios.get(
-            "https://test-music-app.ru/music_web-app_backend/API/csrf.php"
+            "https://test-music-app.ru/music_web-app_backend/API/csrf.php",
+            {
+                withCredentials: true, 
+            }
         );
 
         const data = response.data;

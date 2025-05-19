@@ -99,10 +99,20 @@ async function addUser(
         };
     }
 
+    console.log("Отправляемые данные:", {
+        login,
+        mail,
+        password,
+        csrf_token: csrfToken,
+    });
+
     try {
-        await postAuthData({ login, mail, password, csrf_token: csrfToken });
+        const response = await postAuthData({ login, mail, password, csrfToken });
+
+        console.log("Ответ от сервера:", response);
         return { login, mail, password, error: null };
     } catch (error) {
+        
         return {
             login,
             mail,
