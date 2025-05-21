@@ -3,8 +3,8 @@
 import styles from "./Auth.module.scss";
 import { MyButton } from "@/components/Button/Button";
 import { useActionState, useState, useEffect, useTransition } from "react";
-import { postAuthData } from "@/actions/postAuthData";
 import { getToken } from "@/actions/getToken";
+import { addUser } from "@/app/auth/addUser"
 
 export interface FormState {
     login: string;
@@ -81,45 +81,3 @@ export default function Auth() {
     );
 }
 
-async function addUser(
-    prevState: FormState,
-    formData: FormData,
-    csrfToken: string | null
-): Promise<FormState> {
-    const login = formData.get("login") as string;
-    const mail = formData.get("mail") as string;
-    const password = formData.get("password") as string;
-
-    if (!csrfToken) {
-        return {
-            login,
-            mail,
-            password,
-            error: "CSRF-токен не получен",
-        };
-    }
-
-    console.log("Отправляемые данные:", {
-        login,
-        mail,
-        password,
-        csrf_token: csrfToken,
-    });
-
-    try {
-        const response = await postAuthData({ login, mail, password, csrfToken });
-
-        console.log("Ответ от сервера:", response);
-        return { login, mail, password, error: null };
-    } catch (error) {
-        
-        return {
-            login,
-            mail,
-            password,
-            error:
-                "Ошибка при регистрации: " +
-                (error instanceof Error ? error.message : "Неизвестная ошибка"),
-        };
-    }
-}

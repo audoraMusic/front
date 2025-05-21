@@ -2,23 +2,28 @@
 
 // Кастомные стили, которые нельзя заменить Bootstrap
 .playButton {
-  width: 30px;
-  height: 30px;
-  background: #555;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
+    width: 30px;
+    height: 30px;
+    background: #555;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
 
-  &:hover {
-    background: #666;
-  }
+    &:hover {
+        background: #666;
+    }
 }
 
 .playerText {
-  flex: 1;
+    flex: 1;
 }
 
 .userName,
 .logout {
-  margin-left: 10px;
+    margin-left: 10px;
+}
+
+.slider {
+    width: 70%;
+    margin: 100px 10%;
 }

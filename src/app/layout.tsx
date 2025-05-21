@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { SideBar } from "@/components/SideBar/SideBar";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./globals.css";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
