@@ -1,7 +1,7 @@
 "use client";
 
 import styles from "./Auth.module.scss";
-import { Button } from "@/components/Button/Button";
+import { MyButton } from "@/components/Button/Button";
 import { useActionState, useState, useEffect, useTransition } from "react";
 import { postAuthData } from "@/actions/postAuthData";
 import { getToken } from "@/actions/getToken";
@@ -72,9 +72,9 @@ export default function Auth() {
                     {state.error && (
                         <p className={styles.error}>{state.error}</p>
                     )}
-                    <Button disabled={isPending || !csrfToken}>
+                    <MyButton disabled={isPending || !csrfToken}>
                         {isPending ? "Отправка..." : "Отправить"}
-                    </Button>
+                    </MyButton>
                 </form>
             </div>
         </div>

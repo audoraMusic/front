@@ -10,7 +10,7 @@ interface buttonTypes {
     disabled?: boolean;
 }
 
-export function Button({
+export function MyButton({
     children,
     externalClassnames,
     onClick,

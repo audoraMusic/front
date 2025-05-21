@@ -1,80 +1,6 @@
-.container {
-  margin: 50px;
-  width: 100%;
-  height: 500px;
-}
+// Main.module.scss
 
-.wrapper {
-  margin-top: 100px;
-  display: block;
-  width: 80%;
-  height: 150px;
-  border: 1px white solid;
-  border-radius: 10px;
-  margin-inline: auto;
-}
-
-.button {
-  width: 150px;
-  height: 50px;
-  padding: 20px;
-  margin: 40px;
-}
-
-.container {
-  padding: 20px;
-  background: #1a1a1a;
-  color: #fff;
-  height: 100vh;
-  position: relative;
-}
-
-.title {
-  font-size: 24px;
-  margin-bottom: 20px;
-}
-
-.wrapper {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-.button {
-  padding: 10px 20px;
-  background: #333;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-
-  &:hover {
-    background: #444;
-  }
-}
-
-.tracks {
-  display: flex;
-  gap: 5%; /* Расстояние между треками */
-}
-
-.trackCard {
-  display: flex;
-  flex-direction: column; 
-  gap: 20px;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  background: #333;
-  border-radius: 5px;
-}
-
-.trackArtist,
-.trackName,
-.trackData {
-  flex: 1;
-}
-
+// Кастомные стили, которые нельзя заменить Bootstrap
 .playButton {
   width: 30px;
   height: 30px;
@@ -88,35 +14,8 @@
   }
 }
 
-.player {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  background: #444;
-  border-radius: 5px;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
-
 .playerText {
   flex: 1;
-}
-
-.controlButton {
-  background: #555;
-  color: #fff;
-  border: none;
-  padding: 5px 10px;
-  margin: 0 5px;
-  border-radius: 3px;
-  cursor: pointer;
-
-  &:hover {
-    background: #666;
-  }
 }
 
 .userName,
