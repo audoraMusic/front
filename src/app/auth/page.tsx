@@ -23,7 +23,8 @@ export default function Auth() {
             try {
                 const data = await getToken(); 
                 setCsrfToken(data.csrf_token);
-            } catch (error) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            } catch (error: any) {
                 console.error(
                     "Ошибка при получении CSRF-токена:",
                     error.message
