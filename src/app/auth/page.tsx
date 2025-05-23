@@ -1,7 +1,7 @@
 "use client";
 
 import styles from "./Auth.module.scss";
-import { MyButton } from "@/components/Button/Button";
+import { MyButton } from "@/components/Button/MyButton";
 import { useActionState, useState, useEffect, useTransition } from "react";
 import { getToken } from "@/actions/getToken";
 import { addUser } from "@/app/auth/addUser"
@@ -13,7 +13,7 @@ export interface FormState {
     error?: string | null;
 }
 
-export default function Auth() {
+export default function AuthPage() {
     const [csrfToken, setCsrfToken] = useState<string | null>(null);
     const [, startTransition] = useTransition();
 

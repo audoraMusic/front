@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import styles from "./Button.module.scss";
+import styles from "./MyButton.module.scss";
 import { ReactNode, MouseEventHandler } from "react";
 
 interface buttonTypes {
