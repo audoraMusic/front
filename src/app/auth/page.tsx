@@ -4,7 +4,8 @@ import styles from "./Auth.module.scss";
 import { MyButton } from "@/components/Button/MyButton";
 import { useActionState, useState, useEffect, useTransition } from "react";
 import { getToken } from "@/actions/getToken";
-import { addUser } from "@/app/auth/addUser"
+import { addUser } from "@/app/auth/addUser";
+import { AuthButton } from "./AuthButton";
 
 export interface FormState {
     login: string;
@@ -76,6 +77,7 @@ export default function AuthPage() {
                     <MyButton disabled={isPending || !csrfToken}>
                         {isPending ? "Отправка..." : "Отправить"}
                     </MyButton>
+                    <AuthButton />
                 </form>
             </div>
         </div>
