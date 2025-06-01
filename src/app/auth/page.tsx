@@ -2,114 +2,100 @@
 
 import styles from "./Auth.module.scss";
 import { Button } from "@/components/Button/Button";
-import { useActionState, useState, useEffect, useTransition } from "react";
+import { useState, useEffect } from "react";
+import { getCsrfToken } from "@/actions/getToken";
 import { postAuthData } from "@/actions/postAuthData";
-import { getToken } from "@/actions/getToken";
-
-export interface FormState {
-    login: string;
-    mail: string;
-    password: string;
-    error?: string | null;
-}
 
 export default function Auth() {
+    const [login, setLogin] = useState("");
+    const [mail, setMail] = useState("");
+    const [password, setPassword] = useState("");
     const [csrfToken, setCsrfToken] = useState<string | null>(null);
-    const [, startTransition] = useTransition();
+    const [error, setError] = useState<string | null>(null);
+    const [isPending, setIsPending] = useState(false);
 
-    // Получаем CSRF-токен при загрузке компонента
+    // Получаем CSRF-токен при монтировании
     useEffect(() => {
-        startTransition(async () => {
+        async function fetchToken() {
             try {
-                const data = await getToken(); 
-                setCsrfToken(data.csrf_token);
-            } catch (error) {
-                console.error(
-                    "Ошибка при получении CSRF-токена:",
-                    error.message
-                );
+                const token = await getCsrfToken(); // получаем напрямую
+                setCsrfToken(token);
+            } catch (err) {
+                console.error("Не удалось получить CSRF-токен:", err);
             }
-        });
+        }
+
+        fetchToken();
     }, []);
 
-    const [state, action, isPending] = useActionState(
-        (prevState: FormState, formData: FormData) =>
-            addUser(prevState, formData, csrfToken),
-        {
-            login: "",
-            mail: "",
-            password: "",
-            error: null,
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        if (!csrfToken) {
+            setError("CSRF-токен не получен");
+            return;
         }
-    );
+
+        setIsPending(true);
+        setError(null);
+
+        try {
+            const result = await postAuthData({
+                login,
+                mail,
+                password,
+                csrf_token: csrfToken
+            });
+
+            if (result.success) {
+                alert("✅ Регистрация успешна!");
+                window.location.href = "/login";
+            } else {
+                setError(result.error || "Ошибка регистрации");
+            }
+        } catch (err) {
+            setError(err instanceof Error ? err.message : "Ошибка регистрации");
+        } finally {
+            setIsPending(false);
+        }
+    };
 
     return (
         <div style={{ display: "flex", minHeight: "100vh" }}>
             <div className={styles.wrapper}>
-                <form className={styles.formProps} action={action}>
+                <form className={styles.formProps} onSubmit={handleSubmit}>
                     <label>Логин</label>
                     <input
-                        name="login"
+                        value={login}
+                        onChange={(e) => setLogin(e.target.value)}
                         placeholder="McPotato24"
                         className={styles.inputProps}
-                        defaultValue={state.login}
                     />
+
                     <label>Почта</label>
                     <input
-                        name="mail"
+                        value={mail}
+                        onChange={(e) => setMail(e.target.value)}
                         placeholder="user@gmail.com"
                         className={styles.inputProps}
-                        defaultValue={state.mail}
                     />
+
                     <label>Пароль</label>
                     <input
-                        name="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                         placeholder="не менее 8 символов"
                         type="password"
                         className={styles.inputProps}
-                        defaultValue={state.password}
                     />
-                    {state.error && (
-                        <p className={styles.error}>{state.error}</p>
-                    )}
-                    <Button disabled={isPending || !csrfToken}>
-                        {isPending ? "Отправка..." : "Отправить"}
+
+                    {error && <p className={styles.error}>{error}</p>}
+                    
+                    <Button disabled={!csrfToken} type="submit">
+                        {isPending ? "Отправка..." : "Зарегистрироваться"}
                     </Button>
                 </form>
             </div>
         </div>
     );
-}
-
-async function addUser(
-    prevState: FormState,
-    formData: FormData,
-    csrfToken: string | null
-): Promise<FormState> {
-    const login = formData.get("login") as string;
-    const mail = formData.get("mail") as string;
-    const password = formData.get("password") as string;
-
-    if (!csrfToken) {
-        return {
-            login,
-            mail,
-            password,
-            error: "CSRF-токен не получен",
-        };
-    }
-
-    try {
-        await postAuthData({ login, mail, password, csrf_token: csrfToken });
-        return { login, mail, password, error: null };
-    } catch (error) {
-        return {
-            login,
-            mail,
-            password,
-            error:
-                "Ошибка при регистрации: " +
-                (error instanceof Error ? error.message : "Неизвестная ошибка"),
-        };
-    }
 }

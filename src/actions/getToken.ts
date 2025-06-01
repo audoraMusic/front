@@ -1,23 +1,22 @@
-"use server";
-
+// src/actions/getToken.ts
 import axios from "axios";
 
-export async function getToken() {
-    try {
-        const response = await axios.get(
-            "https://test-music-app.ru/music_web-app_backend/API/csrf.php"
-        );
+export async function getCsrfToken() {
+  try {
+    const response = await axios.get(
+      "https://test-music-app.ru/music_web-app_backend/API/csrf.php", 
+      {
+        withCredentials: true // ⚠️ Это важно для PHPSESSID\
+      }
+    );
 
-        const data = response.data;
-        if (!data.success) {
-            throw new Error(data.error || "Ошибка регистрации");
-        }
-        return data;
-    } catch (error) {
-        throw new Error(
-            error instanceof Error
-                ? error.message
-                : "Ошибка подключения к серверу"
-        );
+    if (!response.data.csrf_token) {
+      throw new Error("Не удалось получить CSRF-токен");
     }
+
+    return response.data.csrf_token;
+  } catch (error) {
+    console.error("Ошибка получения токена:", error);
+    throw new Error("Не удалось получить CSRF-токен");
+  }
 }
