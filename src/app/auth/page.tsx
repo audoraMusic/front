@@ -91,7 +91,7 @@ export default function Auth() {
 
                     {error && <p className={styles.error}>{error}</p>}
                     
-                    <Button disabled={!csrfToken} type="submit">
+                    <Button disabled={!csrfToken}>
                         {isPending ? "Отправка..." : "Зарегистрироваться"}
                     </Button>
                 </form>

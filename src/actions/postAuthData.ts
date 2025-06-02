@@ -6,6 +6,7 @@ interface AuthDataTypes {
   csrf_token: string;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function postAuthData({ login, mail, password, csrf_token }: AuthDataTypes): Promise<any> {
   const response = await fetch("https://test-music-app.ru/music_web-app_backend/API/reg.php",  {
     method: "POST",
