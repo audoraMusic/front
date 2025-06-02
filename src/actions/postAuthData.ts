@@ -1,7 +1,9 @@
 // "use server";
 
 import axios from "axios";
+import dotenv from "dotenv";
 
+dotenv.config();
 interface AuthDataTypes {
     login: string;
     mail: string;
@@ -16,18 +18,23 @@ export async function postAuthData({
     csrfToken,
 }: AuthDataTypes) {
     try {
+        if (!process.env.NEXT_PUBLIC_LOCALREGPATH) {
+            throw new Error(
+                "LOCALREGPATH is not defined in the environment variables"
+            );
+        }
         console.log("Отправляемый CSRF-токен:", csrfToken);
         const response = await axios.post(
-            "https://test-music-app.ru/music_web-app_backend/API/reg.php",
+            process.env.NEXT_PUBLIC_LOCALREGPATH,
             {
                 login,
                 mail,
-                password
+                password,
             },
             {
                 headers: {
                     "Content-Type": "application/json",
-                    "X-CSRF-Token": csrfToken
+                    "X-CSRF-Token": csrfToken,
                 },
                 withCredentials: true,
             }
@@ -52,7 +59,7 @@ export async function postAuthData({
             console.error("Заголовки ответа:", error.response?.headers);
         } else {
             console.error("Это не Axios-ошибка, тип ошибки:", typeof error);
-            console.log('smth')
+            console.log("smth");
         }
         throw new Error(
             error instanceof Error
