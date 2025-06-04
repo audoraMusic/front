@@ -13,14 +13,16 @@ export async function getToken() {
             );
         }
 
-        const response = await axios.get(process.env.NEXT_PUBLIC_LOCALTOKENPATH);
+        const response = await axios.get(
+            process.env.NEXT_PUBLIC_LOCALTOKENPATH,
+            { withCredentials: true }
+        );
 
         const data = response.data;
         if (!data.success) {
             throw new Error(data.error || "Ошибка регистрации");
         }
         return data;
-        
     } catch (error) {
         throw new Error(
             error instanceof Error
