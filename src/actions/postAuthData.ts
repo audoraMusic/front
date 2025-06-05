@@ -18,14 +18,27 @@ export async function postAuthData({
     csrfToken,
 }: AuthDataTypes) {
     try {
-        if (!process.env.NEXT_PUBLIC_LOCALREGPATH) {
-            throw new Error(
-                "LOCALREGPATH is not defined in the environment variables"
-            );
+        const ENVIRONMENT = process.env.NEXT_PUBLIC_ENVIRONMENT;
+        
+        const LOCAL_REG_PATH = process.env.NEXT_PUBLIC_LOCALREGPATH;
+        const REMOTE_REG_PATH = process.env.NEXT_PUBLIC_REMOTEREGPATH;
+
+        let registrationPath: string;
+
+        if (ENVIRONMENT === "local") {
+            if (!LOCAL_REG_PATH) {
+                throw new Error("NEXT_PUBLIC_LOCALREGPATH is not defined");
+            }
+            registrationPath = LOCAL_REG_PATH;
+        } else {
+            if (!REMOTE_REG_PATH) {
+                throw new Error("NEXT_PUBLIC_REMOTEREGPATH is not defined");
+            }
+            registrationPath = REMOTE_REG_PATH;
         }
         console.log("Отправляемый CSRF-токен:", csrfToken);
         const response = await axios.post(
-            process.env.NEXT_PUBLIC_LOCALREGPATH,
+            registrationPath,
             {
                 login,
                 mail,
