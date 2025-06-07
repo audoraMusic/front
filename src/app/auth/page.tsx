@@ -1,11 +1,10 @@
 "use client";
 
 import styles from "./Auth.module.scss";
-import { MyButton } from "@/components/Button/MyButton";
-import { useActionState, useState, useEffect, useTransition } from "react";
-import { getToken } from "@/actions/getToken";
+import { useActionState } from "react";
 import { addUser } from "@/app/auth/addUser";
 import { AuthButton } from "./AuthButton";
+import { useHandleGetToken } from "./useHandleGetToken";
 
 export interface FormState {
     login: string;
@@ -15,24 +14,7 @@ export interface FormState {
 }
 
 export default function AuthPage() {
-    const [csrfToken, setCsrfToken] = useState<string | null>(null);
-    const [, startTransition] = useTransition();
-
-    // Получаем CSRF-токен при загрузке компонента
-    useEffect(() => {
-        startTransition(async () => {
-            try {
-                const data = await getToken(); 
-                setCsrfToken(data.csrf_token);
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            } catch (error: any) {
-                console.error(
-                    "Ошибка при получении CSRF-токена:",
-                    error.message
-                );
-            }
-        });
-    }, []);
+    const csrfToken = useHandleGetToken();
 
     const [state, action, isPending] = useActionState(
         (prevState: FormState, formData: FormData) =>
@@ -74,13 +56,15 @@ export default function AuthPage() {
                     {state.error && (
                         <p className={styles.error}>{state.error}</p>
                     )}
-                    <MyButton disabled={isPending || !csrfToken}>
-                        {isPending ? "Отправка..." : "Отправить"}
-                    </MyButton>
-                    <AuthButton />
+                    <AuthButton
+                        disabled={isPending || !csrfToken}
+                        externalClassname="tiny"
+                        type="submit"
+                    >
+                        {isPending ? "Отправка..." : "Зарегистрироваться"}
+                    </AuthButton>
                 </form>
             </div>
         </div>
     );
 }
-

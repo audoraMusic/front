@@ -1,18 +1,20 @@
-import { Button } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { signIn, signOut } from "@/redux/slices/authSlice";
 import type { RootState } from "../../redux/store";
+import { MyButton } from "@/components/Button/MyButton";
+import { buttonTypes } from "@/components/Button/MyButton";
 
-export function AuthButton() { // Имя компонента с заглавной буквы (React-конвенция)
-  const isAuthenticated = useSelector((state: RootState) => state.auth.value);
-  const dispatch = useDispatch();
+export function AuthButton({ children, disabled, type }: buttonTypes) {
+    const isAuthenticated = useSelector((state: RootState) => state.auth.value);
+    const dispatch = useDispatch();
 
-  return (
-    <Button
-      onClick={() => dispatch(isAuthenticated ? signOut() : signIn())}
-      variant={isAuthenticated ? "danger" : "primary"}
-    >
-      {isAuthenticated ? "Fake auth:Sign Out" : "Fake auth: Sign In"}
-    </Button>
-  );
+    return (
+        <MyButton
+            onClick={() => dispatch(isAuthenticated ? signOut() : signIn())}
+            disabled={disabled}
+            type={type}
+        >
+            {children}
+        </MyButton>
+    );
 }

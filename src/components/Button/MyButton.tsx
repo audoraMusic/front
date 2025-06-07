@@ -1,30 +1,36 @@
-import classNames from "classnames";
 import styles from "./MyButton.module.scss";
 import { ReactNode, MouseEventHandler } from "react";
+import { Button } from "react-bootstrap";
 
-interface buttonTypes {
+export interface buttonTypes {
     children: ReactNode;
-    externalClassnames?: string;
     onClick?: MouseEventHandler<HTMLButtonElement>;
-    formAction?: string | ((formData: FormData) => void | Promise<void>) | undefined;
     disabled?: boolean;
+    variant?: string;
+    size?: 'sm' | 'lg';
+    type?: "button" | "submit" | "reset";
+    externalClassname?: keyof typeof styles;
 }
 
 export function MyButton({
     children,
-    externalClassnames,
     onClick,
-    formAction,
-    disabled
+    disabled,
+    variant = "outline-light",
+    size = 'sm',
+    type = "button",
+    externalClassname="normal",
 }: buttonTypes) {
     return (
-        <button
-            className={classNames(externalClassnames, styles.button)}
+        <Button
             onClick={onClick}
-            formAction={formAction}
             disabled={disabled}
+            variant={variant}
+            size={size}
+            type={type}
+            className={styles[externalClassname]}
         >
             {children}
-        </button>
+        </Button>
     );
 }
