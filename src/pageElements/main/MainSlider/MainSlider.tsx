@@ -2,13 +2,16 @@ import { settings } from "./settings";
 import Slider from "react-slick";
 import styles from "../../../app/main/Main.module.scss";
 import classNames from "classnames";
-import { useContext } from "react";
-import { PlayerContext } from "@/components/PlayerContext";
 import { SliderItem } from "./SliderItem";
 import { mockCards } from "./mockCard";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { playOff, playOn } from "@/redux/slices/playerSlice";
+import { RootState } from "@/redux/store";
 
 export function MainSlider() {
-    const { toggleStatus } = useContext(PlayerContext);
+    const isPlaying = useSelector((state: RootState) => state.player.value)
+    const dispatch = useDispatch();
 
     return (
         <Slider {...settings} className={classNames("mb-4", styles.slider)}>
@@ -17,7 +20,7 @@ export function MainSlider() {
                     key={index}
                     newSongCard={songCard}
                     externalStyles={styles}
-                    toggleStatus={toggleStatus}
+                    toggleStatus={() => dispatch(isPlaying ? playOff() : playOn())}
                 />
             ))}
         </Slider>

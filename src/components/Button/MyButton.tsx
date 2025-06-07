@@ -7,7 +7,7 @@ export interface buttonTypes {
     onClick?: MouseEventHandler<HTMLButtonElement>;
     disabled?: boolean;
     variant?: string;
-    size?: 'sm' | 'lg';
+    size?: "sm" | "lg";
     type?: "button" | "submit" | "reset";
     externalClassname?: keyof typeof styles;
 }
@@ -17,9 +17,9 @@ export function MyButton({
     onClick,
     disabled,
     variant = "outline-light",
-    size = 'sm',
+    size = "sm",
     type = "button",
-    externalClassname="normal",
+    externalClassname = "normal",
 }: buttonTypes) {
     return (
         <Button

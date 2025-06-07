@@ -5,20 +5,20 @@ const initialState: BoolState = {
   value: false,
 }
 
-export const authSlice = createSlice({
-  name: 'auth',
+export const playerSlice = createSlice({
+  name: 'player',
   initialState,
   reducers: {
-    signIn: (state) => {
+    playOn: (state) => {
         state.value = true
     },
-    signOut: (state) => {
+    playOff: (state) => {
         state.value = false
     }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { signIn, signOut } = authSlice.actions
+export const { playOn, playOff } = playerSlice.actions
 
-export default authSlice.reducer
+export default playerSlice.reducer

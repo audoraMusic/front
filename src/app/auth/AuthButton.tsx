@@ -7,7 +7,6 @@ import { buttonTypes } from "@/components/Button/MyButton";
 export function AuthButton({ children, disabled, type }: buttonTypes) {
     const isAuthenticated = useSelector((state: RootState) => state.auth.value);
     const dispatch = useDispatch();
-
     return (
         <MyButton
             onClick={() => dispatch(isAuthenticated ? signOut() : signIn())}
@@ -15,6 +14,7 @@ export function AuthButton({ children, disabled, type }: buttonTypes) {
             type={type}
         >
             {children}
+            
         </MyButton>
     );
 }

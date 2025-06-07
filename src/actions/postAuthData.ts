@@ -72,7 +72,6 @@ export async function postAuthData({
             console.error("Заголовки ответа:", error.response?.headers);
         } else {
             console.error("Это не Axios-ошибка, тип ошибки:", typeof error);
-            console.log("smth");
         }
         throw new Error(
             error instanceof Error
