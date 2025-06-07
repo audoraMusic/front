@@ -4,14 +4,11 @@ import styles from "../../../app/main/Main.module.scss";
 import classNames from "classnames";
 import { SliderItem } from "./SliderItem";
 import { mockCards } from "./mockCard";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { playOff, playOn } from "@/redux/slices/playerSlice";
-import { RootState } from "@/redux/store";
+import { useHandlePlay } from "./useHandlePlay";
+
 
 export function MainSlider() {
-    const isPlaying = useSelector((state: RootState) => state.player.value)
-    const dispatch = useDispatch();
+    const handlePlay = useHandlePlay();
 
     return (
         <Slider {...settings} className={classNames("mb-4", styles.slider)}>
@@ -20,7 +17,7 @@ export function MainSlider() {
                     key={index}
                     newSongCard={songCard}
                     externalStyles={styles}
-                    toggleStatus={() => dispatch(isPlaying ? playOff() : playOn())}
+                    toggleStatus={handlePlay}
                 />
             ))}
         </Slider>

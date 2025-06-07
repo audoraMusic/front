@@ -14,7 +14,6 @@ export function AuthButton({ children, disabled, type }: buttonTypes) {
             type={type}
         >
             {children}
-            
         </MyButton>
     );
 }
