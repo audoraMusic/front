@@ -3,8 +3,8 @@
 import styles from "./Reg.module.scss";
 import { useActionState } from "react";
 import { addUser } from "@/app/registration/addUser";
-import { AuthButton } from "./AuthButton";
-import { useHandleGetToken } from "../registration/useHandleGetToken";
+import { RegButton } from "./RegButton";
+import { useHandleGetToken } from "./useHandleGetToken";
 
 export interface FormState {
     login: string;
@@ -56,13 +56,13 @@ export default function RegPage() {
                     {state.error && (
                         <p className={styles.error}>{state.error}</p>
                     )}
-                    <AuthButton
+                    <RegButton
                         disabled={isPending || !csrfToken}
                         externalClassname="tiny"
                         type="submit"
                     >
                         {isPending ? "Отправка..." : "Зарегистрироваться"}
-                    </AuthButton>
+                    </RegButton>
                 </form>
             </div>
         </div>
