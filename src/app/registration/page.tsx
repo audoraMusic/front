@@ -5,6 +5,7 @@ import { useActionState } from "react";
 import { addUser } from "@/app/registration/addUser";
 import { RegButton } from "./RegButton";
 import { useHandleGetToken } from "./useHandleGetToken";
+import { useHandleReg } from "./useHandleReg";
 
 export interface FormState {
     login: string;
@@ -15,10 +16,19 @@ export interface FormState {
 
 export default function RegPage() {
     const csrfToken = useHandleGetToken();
-
+    const handleReg = useHandleReg();
+    
     const [state, action, isPending] = useActionState(
-        (prevState: FormState, formData: FormData) =>
-            addUser(prevState, formData, csrfToken),
+        async (prevState: FormState, formData: FormData) => {
+            const result = await addUser(prevState, formData, csrfToken);
+            
+            if (!result.error) {
+                handleReg();
+            }
+
+            return result;
+        }
+            ,
         {
             login: "",
             mail: "",

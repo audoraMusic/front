@@ -8,7 +8,7 @@ export function useHandleReg() {
 
     const handleReg = () => {
         dispatch(isAuthenticated ? signOut() : signIn());
-        alert('Регистрация прошла успешно\n Остлось авторизоваться');
+        alert('Регистрация прошла успешно\n Осталось авторизоваться');
     }
 
     return handleReg;
