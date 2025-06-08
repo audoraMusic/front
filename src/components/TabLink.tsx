@@ -13,8 +13,8 @@ interface TabLinkProps {
 
 export function TabLink({ to, children, externalClassnames, size, variant }: TabLinkProps) {
     return (
-        <Button size={size} variant={variant}>
-            <Link href={to} className={externalClassnames}>
+        <Button size={size} variant={variant} className={externalClassnames}>
+            <Link href={to}>
                 {children}
             </Link>
         </Button>
