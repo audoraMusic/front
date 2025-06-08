@@ -1,15 +1,12 @@
-import { useSelector, useDispatch } from "react-redux";
-import { signIn, signOut } from "@/redux/slices/authSlice";
-import type { RootState } from "../../redux/store";
+import { useRouter } from "next/navigation";
 
 export function useHandleReg() {
-    const isAuthenticated = useSelector((state: RootState) => state.auth.value);
-    const dispatch = useDispatch();
+    const router = useRouter();
 
     const handleReg = () => {
-        dispatch(isAuthenticated ? signOut() : signIn());
-        alert('Регистрация прошла успешно\n Осталось авторизоваться');
-    }
+        alert("Регистрация прошла успешно\n Осталось авторизоваться");
+        router.push("/auth");
+    };
 
     return handleReg;
 }

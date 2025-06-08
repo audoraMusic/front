@@ -6,13 +6,7 @@ import { addUser } from "@/app/registration/addUser";
 import { RegButton } from "./RegButton";
 import { useHandleGetToken } from "./useHandleGetToken";
 import { useHandleReg } from "./useHandleReg";
-
-export interface FormState {
-    login: string;
-    mail: string;
-    password: string;
-    error?: string | null;
-}
+import { FormState } from "@/commonInterfaces/formInterfaces";
 
 export default function RegPage() {
     const csrfToken = useHandleGetToken();
