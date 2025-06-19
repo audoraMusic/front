@@ -8,7 +8,7 @@ export function useHandleAuth() {
 
     const handleAuth = () => {
         dispatch(signIn());
-        alert("Регистрация прошла успешно\n Осталось авторизоваться");
+        alert("Авторизация прошла успешно\n Вы вошли в профиль");
         // router.push("/main");
     };
 

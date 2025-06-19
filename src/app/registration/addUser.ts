@@ -1,5 +1,5 @@
-import { postAuthData } from "@/actions/postAuthData";
-import { FormState } from "./page";
+import { postRegData } from "@/actions/postRegData";
+import { FormState } from "@/commonInterfaces/formInterfaces";
 
 export async function addUser(
     prevState: FormState,
@@ -19,7 +19,7 @@ export async function addUser(
         };
     }
 
-    console.log("Отправляемые данные:", {
+    console.log("Отправляемые данные при регистрации:", {
         login,
         mail,
         password,
@@ -27,7 +27,7 @@ export async function addUser(
     });
 
     try {
-        const response = await postAuthData({
+        const response = await postRegData({
             login,
             mail,
             password,

@@ -3,8 +3,8 @@
 import axios from "axios";
 import {
     ENVIRONMENT,
-    LOCAL_AUTH_PATH,
-    REMOTE_AUTH_PATH
+    LOCAL_REG_PATH,
+    REMOTE_REG_PATH
 } from "@/envVars";
 
 interface RegDataTypes {
@@ -21,22 +21,22 @@ export async function postRegData({
     csrfToken,
 }: RegDataTypes) {
     try {
-        let authPath: string;
+        let registrationPath: string;
 
         if (ENVIRONMENT === "local") {
-            if (!LOCAL_AUTH_PATH) {
-                throw new Error("NEXT_PUBLIC_LOCALREGPATH is not defined");
+            if (!LOCAL_REG_PATH) {
+                throw new Error("NEXT_PUBLIC_LOCAL_REG_PATH is not defined");
             }
-            authPath = LOCAL_AUTH_PATH;
+            registrationPath = LOCAL_REG_PATH;
         } else {
-            if (!REMOTE_AUTH_PATH) {
-                throw new Error("NEXT_PUBLIC_REMOTEREGPATH is not defined");
+            if (!REMOTE_REG_PATH) {
+                throw new Error("NEXT_PUBLIC_REMOTE_REG_PATH is not defined");
             }
-            authPath = REMOTE_AUTH_PATH;
+            registrationPath = REMOTE_REG_PATH;
         }
         console.log("Отправляемый CSRF-токен:", csrfToken);
         const response = await axios.post(
-            authPath,
+            registrationPath,
             {
                 login,
                 mail,

@@ -25,7 +25,7 @@ export function AuthForm({ styles, state, action, isPending, csrfToken }: AuthFo
                 externalClassname="tiny"
                 type="submit"
             >
-                {isPending ? "Отправка..." : "Зарегистрироваться"}
+                {isPending ? "Отправка..." : "Авторизоваться"}
             </AuthButton>
         </form>
     );
