@@ -1,3 +1,4 @@
 export interface BoolState {
-  value: boolean
+    value: boolean;
+    login?: string;
 }

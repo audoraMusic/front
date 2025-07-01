@@ -1,24 +1,27 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { BoolState } from './sliceInterfaces';
+import { createSlice } from "@reduxjs/toolkit";
+import { BoolState } from "./sliceInterfaces";
 
 const initialState: BoolState = {
-  value: false,
-}
+    value: false,
+    login: undefined,
+};
 
 export const authSlice = createSlice({
-  name: 'auth',
-  initialState,
-  reducers: {
-    signIn: (state) => {
-        state.value = true
+    name: "auth",
+    initialState,
+    reducers: {
+        signIn: (state, action) => {
+            state.value = true;
+            state.login = action.payload;
+        },
+        signOut: (state) => {
+            state.value = false;
+            state.login = undefined;
+        },
     },
-    signOut: (state) => {
-        state.value = false
-    }
-  },
-})
+});
 
 // Action creators are generated for each case reducer function
-export const { signIn, signOut } = authSlice.actions
+export const { signIn, signOut } = authSlice.actions;
 
-export default authSlice.reducer
+export default authSlice.reducer;

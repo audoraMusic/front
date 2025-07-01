@@ -15,9 +15,9 @@ export default function AuthPage() {
     const [state, action, isPending] = useActionState<FormState, FormData>(
         async (prevState: FormState, formData: FormData) => {
             const result = await authUser(prevState, formData, csrfToken);
-            console.log('result;', result)
+            console.log("result;", result);
             if (result.response?.success) {
-                handleAuth();
+                handleAuth(result.login);
             }
 
             return result;
@@ -36,7 +36,7 @@ export default function AuthPage() {
                     styles={{
                         formProps: styles.formProps,
                         inputProps: styles.inputProps,
-                        error: styles.error, 
+                        error: styles.error,
                     }}
                     state={state}
                     action={action}
