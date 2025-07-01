@@ -3,6 +3,12 @@ export interface FormState {
     mail?: string;
     password: string;
     error?: string | null;
+    response?: ResponseState;
+}
+
+export interface ResponseState {
+    data?: object,
+    success: boolean
 }
 
 export interface AuthFormStyles {

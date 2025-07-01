@@ -2,7 +2,7 @@
 
 import styles from "./Auth.module.scss";
 import { useActionState } from "react";
-import { addUser } from "@/app/registration/addUser";
+import { authUser } from "./authUser";
 import { useHandleGetToken } from "../registration/useHandleGetToken";
 import { AuthForm } from "./AuthForm";
 import { FormState } from "@/commonInterfaces/formInterfaces";
@@ -14,9 +14,9 @@ export default function AuthPage() {
 
     const [state, action, isPending] = useActionState<FormState, FormData>(
         async (prevState: FormState, formData: FormData) => {
-            const result = await addUser(prevState, formData, csrfToken);
-
-            if (!result.error) {
+            const result = await authUser(prevState, formData, csrfToken);
+            console.log('result;', result)
+            if (result.response?.success) {
                 handleAuth();
             }
 

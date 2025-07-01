@@ -1,36 +1,30 @@
 // "use server";
 
 import axios from "axios";
-import {
-    ENVIRONMENT,
-    LOCAL_AUTH_PATH,
-    REMOTE_AUTH_PATH
-} from "@/envVars";
+import { ENVIRONMENT, LOCAL_AUTH_PATH, REMOTE_AUTH_PATH } from "@/envVars";
 
-interface RegDataTypes {
+interface AuthDataTypes {
     login: string;
-    mail: string;
     password: string;
     csrfToken: string;
 }
 
-export async function postRegData({
+export async function postAuthData({
     login,
-    mail,
     password,
     csrfToken,
-}: RegDataTypes) {
+}: AuthDataTypes) {
     try {
         let authPath: string;
 
         if (ENVIRONMENT === "local") {
             if (!LOCAL_AUTH_PATH) {
-                throw new Error("NEXT_PUBLIC_LOCALREGPATH is not defined");
+                throw new Error("NEXT_PUBLIC_LOCAL_AUTH_PATH is not defined");
             }
             authPath = LOCAL_AUTH_PATH;
         } else {
             if (!REMOTE_AUTH_PATH) {
-                throw new Error("NEXT_PUBLIC_REMOTEREGPATH is not defined");
+                throw new Error("NEXT_PUBLIC_REMOTE_AUTH_PATH is not defined");
             }
             authPath = REMOTE_AUTH_PATH;
         }
@@ -39,13 +33,13 @@ export async function postRegData({
             authPath,
             {
                 login,
-                mail,
                 password,
+                csrf_token: csrfToken,
             },
             {
                 headers: {
                     "Content-Type": "application/json",
-                    "X-CSRF-Token": csrfToken,
+                    // "X-CSRF-Token": csrfToken,
                 },
                 withCredentials: true,
             }
@@ -54,27 +48,37 @@ export async function postRegData({
         const data = response.data;
         console.log("Ответ сервера:", data);
         if (!data.success) {
-            throw new Error(data.error || "Ошибка регистрации");
+            return {
+                success: false,
+                error: data.error || "Ошибка регистрации",
+            };
         }
-        return data;
+        return { success: true, data };
     } catch (error) {
         // Логируем ошибку без условий, чтобы точно увидеть, что происходит
         console.log("Произошла ошибка в postAuthData:");
-        console.error("Полная информация об ошибке:", error);
+        // console.error("Полная информация об ошибке:", error);
 
-        // Проверяем, является ли ошибка Axios-ошибкой
-        if (axios.isAxiosError(error)) {
-            console.error("Это Axios-ошибка:");
-            console.error("Статус ошибки:", error.response?.status);
-            console.error("Тело ошибки от сервера:", error.response?.data);
-            console.error("Заголовки ответа:", error.response?.headers);
-        } else {
-            console.error("Это не Axios-ошибка, тип ошибки:", typeof error);
-        }
-        throw new Error(
-            error instanceof Error
-                ? error.message
-                : "Ошибка подключения к серверу"
-        );
+        // // Проверяем, является ли ошибка Axios-ошибкой
+        // if (axios.isAxiosError(error)) {
+        //     console.error("Это Axios-ошибка:");
+        //     console.error("Статус ошибки:", error.response?.status);
+        //     console.error("Тело ошибки от сервера:", error.response?.data);
+        //     console.error("Заголовки ответа:", error.response?.headers);
+        // } else {
+        //     console.error("Это не Axios-ошибка, тип ошибки:", typeof error);
+        // }
+        // throw new Error(
+        //     error instanceof Error
+        //         ? error.message
+        //         : "Ошибка подключения к серверу"
+        // );
+        return {
+            success: false,
+            error:
+                error instanceof Error
+                    ? error.message
+                    : "Ошибка подключения к серверу",
+        };
     }
 }
