@@ -7,16 +7,26 @@ interface TabLinkProps {
     to: string;
     children: ReactNode;
     externalClassnames?: string;
-    size?: 'sm' | 'lg';
+    size?: "sm" | "lg";
     variant?: ButtonVariant;
 }
 
-export function TabLink({ to, children, externalClassnames, size, variant }: TabLinkProps) {
+export function TabLink({
+    to,
+    children,
+    externalClassnames,
+    size,
+    variant,
+}: TabLinkProps) {
     return (
-        <Button size={size} variant={variant} className={externalClassnames}>
-            <Link href={to}>
+        <Link href={to} prefetch>
+            <Button
+                size={size}
+                variant={variant}
+                className={externalClassnames}
+            >
                 {children}
-            </Link>
-        </Button>
+            </Button>
+        </Link>
     );
 }

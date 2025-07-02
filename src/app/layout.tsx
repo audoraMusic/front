@@ -1,16 +1,22 @@
-import { geistMono, geistSans, oswald } from "./layoutSettings";
+import { geistMono, oswald } from "./layoutSettings";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./globals.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { App } from "@/components/App";
 import { ReactNode } from "react";
+// import { Metadata } from "next";
+
+// export const metadata: Metadata = {
+//     title: "Audora",
+//     description: "Music app",
+// };
 
 
 export default function RootLayout({ children }: { children: ReactNode}) {
     return (
         <html lang="en">
-            <body className={`${geistSans.variable} ${geistMono.variable} ${oswald.variable}`}>
+            <body className={`${geistMono.variable} ${oswald.variable}`}>
                 <App>{children}</App>
             </body>
         </html>
