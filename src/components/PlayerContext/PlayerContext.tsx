@@ -1,10 +1,9 @@
 "use client";
 
 import { PlayerContext as PlayerContextProvider } from ".";
-import { useState } from "react";
-import { onlyChild } from "@/commonInterfaces/commonInterfaces";
+import { ReactNode, useState } from "react";
 
-export function PlayerContext({ children }: onlyChild) {
+export function PlayerContext({ children }: { children: ReactNode}) {
     const [musicPlaying, setIsPlaying] = useState({ isPlaying: false });
 
     function toggleStatus(): void {
