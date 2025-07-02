@@ -1,5 +1,10 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Oswald } from "next/font/google";
+
+export const oswald = Oswald({
+    variable: "--font-oswald",
+    subsets: ["latin"],
+});
 
 export const geistSans = Geist({
     variable: "--font-geist-sans",
