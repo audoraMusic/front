@@ -19,10 +19,14 @@
     padding: 0;
     cursor: pointer;
     transition: transform 0.1s ease, color 0.2s ease;
-    color: #00ff73; 
+    color: #00ff73;
 }
 
 .iconButton:active {
     transform: scale(0.8);
-    color: #decaca; 
+    color: #decaca;
+}
+
+.link {
+    width: 100%;
 }
