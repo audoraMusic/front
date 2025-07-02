@@ -1,11 +1,15 @@
+import { useDispatch } from "react-redux";
 import styles from "./SideBar.module.scss";
+import { signOut } from "@/redux/slices/authSlice";
 
 
 export function Login({ login }: { login?: string }) {
+    const dispatch = useDispatch();
+
     return (
         <div className="m-auto d-flex gap-4 align-items-center">
             <div>{login}</div>
-            <button className={styles.iconButton}>
+            <button className={styles.iconButton} onClick={() => dispatch(signOut())}> 
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="34"

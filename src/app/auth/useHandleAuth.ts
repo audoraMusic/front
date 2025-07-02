@@ -9,7 +9,7 @@ export function useHandleAuth() {
     const handleAuth = (login: string) => {
         dispatch(signIn(login));
         alert("Авторизация прошла успешно\n Вы вошли в профиль");
-        // router.push("/main");
+        router.push("/main");
     };
 
     return handleAuth;
