@@ -3,15 +3,13 @@ import styles from "./SideBar.module.scss";
 import { ReactNode } from "react";
 import { RootState } from "@/redux/store";
 import { useSelector } from "react-redux";
+import { Login } from "./Login";
+import { RegMenu } from "./RegMenu";
 
-interface pageContent {
-    children: ReactNode;
-}
-
-export function SideBar({ children }: pageContent) {
+export function SideBar({ children }: {children?: ReactNode}) {
     const login = useSelector((state: RootState) => state.auth.login);
     const isAuth = useSelector((state: RootState) => state.auth.value);
-    console.log(login, isAuth);
+
     return (
         <div className={styles.wrapper}>
             <div className={styles.sideBar}>
@@ -22,18 +20,9 @@ export function SideBar({ children }: pageContent) {
                 <TabLink to="/history">История</TabLink>
                 <div className="mt-auto d-flex flex-column gap-2">
                     {!isAuth ? (
-                        <>
-                            <TabLink to="/auth" variant="outline-info">
-                                Войти
-                            </TabLink>
-                            <TabLink to="/registration" variant="outline-info">
-                                Зарегистрироваться
-                            </TabLink>
-                        </>
+                        <RegMenu />
                     ) : (
-                        <>
-                            {login}
-                        </>
+                        <Login login={login} />
                     )}
                 </div>
             </div>

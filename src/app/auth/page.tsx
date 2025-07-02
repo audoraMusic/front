@@ -18,6 +18,8 @@ export default function AuthPage() {
             console.log("result;", result);
             if (result.response?.success) {
                 handleAuth(result.login);
+            } else {
+                alert('Неверный логин или пароль');
             }
 
             return result;

@@ -5,7 +5,11 @@ import playerReducer from "./slices/playerSlice";
 export const store = configureStore({
     reducer: {
         auth: authReducer,
-        player: playerReducer
+        player: playerReducer,
+    },
+    devTools: {
+        trace: true, 
+        traceLimit: 25,
     },
 });
 
