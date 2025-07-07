@@ -21,5 +21,7 @@
 
 .container {
     display: flex; 
+    width: 350px;
+    margin-inline: auto;
     min-height: 100vh;
 }

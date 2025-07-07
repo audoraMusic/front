@@ -31,7 +31,7 @@ export function RegContent() {
     );
 
     return (
-        <div style={{ display: "flex", minHeight: "100vh" }}>
+        <div className={styles.container}>
             <div className={styles.wrapper}>
                 <form className={styles.formProps} action={action}>
                     <label>Логин</label>
