@@ -7,3 +7,7 @@ First, a token is generated, then it sends the token, login, and password to the
 
 ## Changing of buttons in bottom left corner
 
+### from
+![alt text](image-2.png)
+### to
+![alt text](image-1.png)
