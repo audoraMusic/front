@@ -1,11 +1,13 @@
-"use client";
+import { Metadata } from "next";
+import { HistoryContent } from "./HistoryContent";
 
-import { Container } from "react-bootstrap";
+export const metadata: Metadata = {
+    title: 'История',
+    description: 'Страница с историй прослушиваний'
+}
 
 export default function HistoryPage() {
     return (
-        <Container fluid className="py-5 text-white min-vh-100">
-            <h1 className="mb-4 fs-3">История</h1>
-        </Container>
+        <HistoryContent />
     );
 }
