@@ -5,15 +5,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { App } from "@/components/App";
 import { ReactNode } from "react";
-// import { Metadata } from "next";
 
-// export const metadata: Metadata = {
-//     title: "Audora",
-//     description: "Music app",
-// };
-
-
-export default function RootLayout({ children }: { children: ReactNode}) {
+export default function RootLayout({ children }: { children: ReactNode }) {
     return (
         <html lang="en">
             <body className={`${geistMono.variable} ${oswald.variable}`}>
