@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import {
     persistStore,
     persistReducer,
@@ -18,13 +18,15 @@ const persistConfig = {
     storage,
 };
 
-const persistedReducer = persistReducer(persistConfig, authReducer);
+const rootReducers = combineReducers({
+    auth: authReducer,
+    player: playerReducer,
+});
+
+const persistedReducers = persistReducer(persistConfig, rootReducers);
 
 export const store = configureStore({
-    reducer: {
-        auth: persistedReducer,
-        player: playerReducer,
-    },
+    reducer: persistedReducers,
     devTools: {
         trace: true,
         traceLimit: 25,
