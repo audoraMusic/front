@@ -9,13 +9,13 @@ export function ControlPanel() {
     return (
         <div className={styles.panel}>
             <Button variant="secondary" className="mx-1 py-1 px-2 rounded">
-                <Image src={LeftArrow} alt="stop" width={30} height={30} />
+                <Image src={LeftArrow} alt="stop" width={60} height={60} />
             </Button>
             <Button variant="secondary" className="mx-1 py-1 px-2 rounded">
-                <Image src={StopIcon} alt="stop" width={30} height={30} />
+                <Image src={StopIcon} alt="stop" width={60} height={60} />
             </Button>
             <Button variant="secondary" className="mx-1 py-1 px-2 rounded">
-                <Image src={RightArrow} alt="stop" width={30} height={30} />
+                <Image src={RightArrow} alt="stop" width={60} height={60} />
             </Button>
         </div>
     );
