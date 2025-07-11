@@ -10,6 +10,7 @@ export function Player() {
             bg="secondary"
             className={`${styles.player} d-flex justify-content-between align-items-center rounded`}
         >
+            {/* test rep */}
             <ProgressBar />
             <ControlPanel />
         </Navbar>
