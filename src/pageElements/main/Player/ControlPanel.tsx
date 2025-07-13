@@ -1,21 +1,56 @@
 import Image from "next/image";
-import StopIcon from "../../../public/stop.svg";
-import LeftArrow from "../../../public/lArrow.svg";
-import RightArrow from "../../../public/rArrow.svg";
+import StopIcon from "../../../../public/stop.svg";
+import LeftArrow from "../../../../public/lArrow.svg";
+import RightArrow from "../../../../public/rArrow.svg";
 import { Button } from "react-bootstrap";
-import styles from "./Player.module.scss"
+import styles from "./Player.module.scss";
 
-export function ControlPanel() {
+export function ControlPanel({
+    audioRef,
+}: {
+    audioRef: React.RefObject<HTMLAudioElement | null>;
+}) {
+    const handlePlay = () => {
+        if (audioRef.current) {
+            audioRef.current.play();
+        }
+    };
+
     return (
         <div className={styles.panel}>
             <Button variant="secondary" className="mx-1 py-1 px-2 rounded">
-                <Image src={LeftArrow} alt="stop" width={60} height={60} priority />
+                <Image
+                    src={LeftArrow}
+                    alt="stop"
+                    width={60}
+                    height={60}
+                    priority
+                />
+            </Button>
+            <Button
+                variant="secondary"
+                className="mx-1 py-1 px-2 rounded"
+                onClick={(e) => {
+                    e.stopPropagation();
+                    handlePlay()
+                }}
+            >
+                <Image
+                    src={StopIcon}
+                    alt="stop"
+                    width={60}
+                    height={60}
+                    priority
+                />
             </Button>
             <Button variant="secondary" className="mx-1 py-1 px-2 rounded">
-                <Image src={StopIcon} alt="stop" width={60} height={60} priority />
-            </Button>
-            <Button variant="secondary" className="mx-1 py-1 px-2 rounded">
-                <Image src={RightArrow} alt="stop" width={60} height={60} priority />
+                <Image
+                    src={RightArrow}
+                    alt="stop"
+                    width={60}
+                    height={60}
+                    priority
+                />
             </Button>
         </div>
     );

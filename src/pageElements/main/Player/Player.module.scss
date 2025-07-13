@@ -37,3 +37,10 @@
     height: 100%;
     pointer-events: none;
 }
+
+.volumeControl {
+    z-index: 2;
+    position: absolute; 
+    top: 45%;
+    left: 80%;
+}

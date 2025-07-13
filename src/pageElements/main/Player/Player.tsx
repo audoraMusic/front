@@ -3,6 +3,7 @@ import { ControlPanel } from "./ControlPanel";
 import styles from "./Player.module.scss";
 import { ProgressBar } from "./ProgressBar";
 import { useState, useEffect, useRef } from "react";
+import { VolumeControl } from "./VolumeControl";
 
 export function Player({ trackUrl }: { trackUrl: string }) {
     const audioRef = useRef<HTMLAudioElement>(null);
@@ -18,10 +19,11 @@ export function Player({ trackUrl }: { trackUrl: string }) {
 
         audio.addEventListener("loadedmetadata", handleLoadedMetadata);
         audio.addEventListener("timeupdate", handleTimeUpdate);
-        
+
         audio.load();
 
         return () => {
+            audio.pause();
             audio.removeEventListener("loadedmetadata", handleLoadedMetadata);
             audio.removeEventListener("timeupdate", handleTimeUpdate);
         };
@@ -39,12 +41,14 @@ export function Player({ trackUrl }: { trackUrl: string }) {
             bg="secondary"
             className={`${styles.player} d-flex justify-content-between align-items-center rounded`}
         >
+            <audio ref={audioRef} src={trackUrl} />
             <ProgressBar
                 duration={duration}
                 currentTime={currentTime}
                 onSeek={handleSeek}
             >
-                <ControlPanel />
+                <ControlPanel audioRef={audioRef} />
+                <VolumeControl audioRef={audioRef} />
             </ProgressBar>
         </Navbar>
     );
