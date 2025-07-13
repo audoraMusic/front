@@ -12,7 +12,11 @@ export function ControlPanel({
 }) {
     const handlePlay = () => {
         if (audioRef.current) {
-            audioRef.current.play();
+            if (audioRef.current.paused) {
+                audioRef.current.play();
+            } else {
+                audioRef.current.pause();
+            }
         }
     };
 
@@ -32,7 +36,7 @@ export function ControlPanel({
                 className="mx-1 py-1 px-2 rounded"
                 onClick={(e) => {
                     e.stopPropagation();
-                    handlePlay()
+                    handlePlay();
                 }}
             >
                 <Image

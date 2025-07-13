@@ -19,21 +19,26 @@ export function ProgressBar({
 
     const progress = duration ? (currentTime / duration) * 100 : 0;
 
-    const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const handleMouseDown = () => {
+        window.addEventListener("mousemove", handleMouseMove);
+        window.addEventListener("mouseup", handleMouseUp);
+    };
+
+    const handleMouseMove = (e: MouseEvent) => {
         if (!barRef.current) return;
-
         const rect = barRef.current.getBoundingClientRect();
-        const clickX = e.clientX - rect.left;
-        const width = rect.width;
-
-        const percent = clickX / width;
-        const newTime = duration * percent;
-
+        const percent = (e.clientX - rect.left) / rect.width;
+        const newTime = duration * Math.max(0, Math.min(1, percent));
         onSeek(newTime);
     };
 
+    const handleMouseUp = () => {
+        window.removeEventListener("mousemove", handleMouseMove);
+        window.removeEventListener("mouseup", handleMouseUp);
+    };
+
     return (
-        <div ref={barRef} className={styles.bar} onClick={handleClick}>
+        <div ref={barRef} className={styles.bar} onMouseDown={handleMouseDown}>
             <div
                 className={styles.progressLine}
                 style={{ width: `${progress}%` }}
