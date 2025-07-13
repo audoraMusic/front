@@ -10,7 +10,7 @@ export function AppContent({ children }: { children: ReactNode}) {
     return (
         <>
             <SideBar>{children}</SideBar>
-            {isPlaingNow && <Player />}
+            {isPlaingNow && <Player trackUrl="chikoi.mp3" />}
         </>
     );
 }

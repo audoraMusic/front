@@ -2,15 +2,35 @@ import { Navbar } from "react-bootstrap";
 import { ControlPanel } from "./ControlPanel";
 import styles from "./Player.module.scss";
 import { ProgressBar } from "./ProgressBar";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
-export function Player() {
-    const duration = 240;
+export function Player({ trackUrl }: { trackUrl: string }) {
+    const audioRef = useRef<HTMLAudioElement>(null);
+    const [duration, setDuration] = useState(0);
     const [currentTime, setCurrentTime] = useState(0);
 
+    useEffect(() => {
+        const audio = audioRef.current;
+        if (!audio) return;
+
+        const handleLoadedMetadata = () => setDuration(audio.duration);
+        const handleTimeUpdate = () => setCurrentTime(audio.currentTime);
+
+        audio.addEventListener("loadedmetadata", handleLoadedMetadata);
+        audio.addEventListener("timeupdate", handleTimeUpdate);
+        
+        audio.load();
+
+        return () => {
+            audio.removeEventListener("loadedmetadata", handleLoadedMetadata);
+            audio.removeEventListener("timeupdate", handleTimeUpdate);
+        };
+    }, [trackUrl]);
+
     const handleSeek = (time: number) => {
-        console.log("Перематываем на:", time);
-        setCurrentTime(time);
+        if (audioRef.current) {
+            audioRef.current.currentTime = time;
+        }
     };
 
     return (
